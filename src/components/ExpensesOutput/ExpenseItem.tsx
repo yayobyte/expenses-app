@@ -14,10 +14,10 @@ export const ExpenseItem = ({ description, amount, date }: ExpenseItemProps) => 
             <View style={styles.item}>
                 <View>
                     <Text style={[styles.textBase, styles.description]}>{description}</Text>
-                    <Text style={[styles.textBase]}>{date.toDateString()}</Text>
+                    <Text style={[styles.textBase]}>{date.toLocaleDateString()}</Text>
                 </View>
                 <View style={styles.amountContainer}>
-                    <Text style={styles.amount}>{amount}</Text>
+                    <Text style={styles.amount}>{amount.toFixed(2)}</Text>
                 </View>
             </View>
         </Pressable>
