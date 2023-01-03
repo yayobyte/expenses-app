@@ -1,6 +1,7 @@
-import { Text } from 'react-native'
+import {ExpensesOutput} from "../components/ExpensesOutput/ExpensesOutput";
+import {DUMMY_EXPENSES} from "../constants";
 export const RecentExpenses = () => {
     return (
-        <Text>Recent Expenses</Text>
+        <ExpensesOutput expenses={DUMMY_EXPENSES} expensesPeriod={'Lsat 7 days'} />
     )
 }
