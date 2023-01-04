@@ -38,6 +38,10 @@ export const GlobalStyles = {
         l: 36,
         xl: 48,
     },
+    buttonSize: {
+        minWidth: 120,
+        marginHorizontal: 8
+    }
 };
 
 export type Expense = {
