@@ -34,4 +34,7 @@ export const styles = StyleSheet.create({
         color: GlobalStyles.colors.primary500,
         fontWeight: 'bold',
     },
+    pressed: {
+        opacity: 0.75,
+    }
 })
