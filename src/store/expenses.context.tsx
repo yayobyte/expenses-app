@@ -10,7 +10,7 @@ enum ExpenseActions {
 }
 
 export const ExpensesContext = createContext({
-    expenses: [],
+    expenses: [] as Array<Expense>,
     [ExpenseActions.addExpense]: ({ description, amount, date }: Expense) => null,
     [ExpenseActions.deleteExpense]: (id : Expense['id']) => null,
     [ExpenseActions.updateExpense]: ({ id, description, amount, date }: Expense) => null

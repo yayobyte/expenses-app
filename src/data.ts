@@ -10,6 +10,18 @@ export const DUMMY_EXPENSES: Array<Expense> = [
     },
     {
         id: uuid(),
+        description: 'Apple TV',
+        amount: 159.99,
+        date: new Date('2022-12-31')
+    },
+    {
+        id: uuid(),
+        description: 'Xbox Controller',
+        amount: 109.99,
+        date: new Date('2023-01-05')
+    },
+    {
+        id: uuid(),
         description: 'Gloves',
         amount: 69.99,
         date: new Date('2023-01-22')
