@@ -33,6 +33,11 @@ export const GlobalStyles = {
         h2: 20,
         h1: 24,
     },
+    iconSize: {
+        m: 24,
+        l: 36,
+        xl: 48,
+    },
 };
 
 export type Expense = {

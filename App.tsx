@@ -23,7 +23,7 @@ const ExpensesOverview = () => {
             tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
             headerRight: ({ tintColor }) => (<
-                IconButton icon={'add'} size={24} color={tintColor} onPress={() => navigation.navigate(MANAGE_EXPENSES_NAV)} />
+                IconButton icon={'add'} size={GlobalStyles.iconSize.m} color={tintColor} onPress={() => navigation.navigate(MANAGE_EXPENSES_NAV)} />
             ),
         })}>
             <BottomTabs.Screen

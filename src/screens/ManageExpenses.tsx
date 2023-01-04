@@ -1,14 +1,22 @@
-import { Text } from 'react-native'
-import {NavigationProp, RouteProp} from "@react-navigation/native";
+import { View } from 'react-native'
+import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
 import {useLayoutEffect} from "react";
-type ManageExpensesProps = {
-    route: RouteProp<{ params: { expenseId: string }}>
-    navigation: NavigationProp<string>
+import {IconButton} from "../components/UI/IconButton";
+import {GlobalStyles} from "../constants";
+import {styles} from "./ManageExpenses.styles";
+
+type ScreenNavigatorProps = {
+    route: RouteProp<{ params: Readonly<Record<string, string>> }>
+    navigation: NavigationProp<ParamListBase>
 }
 
-export const ManageExpenses = ({ route, navigation }: ManageExpensesProps) => {
+export const ManageExpenses = ({ route, navigation }: ScreenNavigatorProps) => {
     const id = route.params?.expenseId
     const isEditing = !!id
+
+    const deleteExpenseHandler = () => {
+
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -17,6 +25,15 @@ export const ManageExpenses = ({ route, navigation }: ManageExpensesProps) => {
     }, [navigation, isEditing])
 
     return (
-        <Text>Manage Expenses</Text>
+        <View style={styles.container}>{isEditing && (
+            <View style={styles.deleteContainer}>
+                <IconButton
+                    size={GlobalStyles.iconSize.l}
+                    color={GlobalStyles.colors.error500}
+                    onPress={deleteExpenseHandler}
+                    icon={'trash'}
+                />
+            </View>)
+        }</View>
     )
 }
