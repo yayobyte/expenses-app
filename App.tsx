@@ -9,21 +9,23 @@ import {GlobalStyles} from "./src/constants";
 import {Ionicons} from '@expo/vector-icons'
 import {IconButton} from "./src/components/UI/IconButton";
 import {EXPENSES_OVERVIEW_NAV, MANAGE_EXPENSES_NAV} from "./src/navigation/routes";
+import {ExpensesContextProvider} from "./src/store/expenses.context";
 
 const Stack = createStackNavigator()
 const BottomTabs = createBottomTabNavigator()
 
 const ExpensesOverview = () => {
     return (
-        <BottomTabs.Navigator screenOptions={({ navigation }) => ({
+        <BottomTabs.Navigator screenOptions={({navigation}) => ({
             headerStyle: {
                 backgroundColor: GlobalStyles.colors.primary500,
             },
             headerTintColor: 'white',
             tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
-            headerRight: ({ tintColor }) => (<
-                IconButton icon={'add'} size={GlobalStyles.iconSize.m} color={tintColor} onPress={() => navigation.navigate(MANAGE_EXPENSES_NAV)} />
+            headerRight: ({tintColor}) => (<
+                    IconButton icon={'add'} size={GlobalStyles.iconSize.m} color={tintColor}
+                               onPress={() => navigation.navigate(MANAGE_EXPENSES_NAV)}/>
             ),
         })}>
             <BottomTabs.Screen
@@ -33,7 +35,7 @@ const ExpensesOverview = () => {
                     title: 'Recent Expenses',
                     tabBarLabel: 'Recent',
                     tabBarIcon: ({color, size}) => (
-                        <Ionicons name={'time'} size={size} color={color} />
+                        <Ionicons name={'time'} size={size} color={color}/>
                     )
                 }}
             />
@@ -43,7 +45,7 @@ const ExpensesOverview = () => {
                 options={{
                     title: 'All Expenses',
                     tabBarLabel: 'All Expenses',
-                    tabBarIcon: ({color, size}) => <Ionicons name={'calendar'} size={size} color={color} />
+                    tabBarIcon: ({color, size}) => <Ionicons name={'calendar'} size={size} color={color}/>
                 }}
             />
         </BottomTabs.Navigator>
@@ -54,25 +56,27 @@ export default function App() {
     return (
         <>
             <StatusBar style="auto"/>
-            <NavigationContainer>
-                <Stack.Navigator screenOptions={{
-                    headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-                    headerTintColor: 'white',
-                }}>
-                    <Stack.Screen
-                        name={EXPENSES_OVERVIEW_NAV}
-                        component={ExpensesOverview}
-                        options={{headerShown: false}}
-                    />
-                    <Stack.Screen
-                        name={MANAGE_EXPENSES_NAV}
-                        component={ManageExpenses}
-                        options={{
-                            presentation: 'modal',
-                        }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
+            <ExpensesContextProvider>
+                <NavigationContainer>
+                    <Stack.Navigator screenOptions={{
+                        headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+                        headerTintColor: 'white',
+                    }}>
+                        <Stack.Screen
+                            name={EXPENSES_OVERVIEW_NAV}
+                            component={ExpensesOverview}
+                            options={{headerShown: false}}
+                        />
+                        <Stack.Screen
+                            name={MANAGE_EXPENSES_NAV}
+                            component={ManageExpenses}
+                            options={{
+                                presentation: 'modal',
+                            }}
+                        />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </ExpensesContextProvider>
         </>
     );
 }

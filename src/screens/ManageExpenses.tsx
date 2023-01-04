@@ -5,6 +5,7 @@ import {IconButton} from "../components/UI/IconButton";
 import {GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {Button} from "../components/UI/Button";
+import {DUMMY_EXPENSES} from "../data";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -20,7 +21,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     }
 
     const cancelHandler = () => {
-
+        navigation.goBack()
     }
 
     const confirmHandler = () => {
