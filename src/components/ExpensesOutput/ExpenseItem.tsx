@@ -8,13 +8,14 @@ type ExpenseItemProps = {
     description: Expense['description'],
     amount: Expense['amount'],
     date: Expense['date'],
+    id: Expense['id'],
 }
 
-export const ExpenseItem = ({ description, amount, date }: ExpenseItemProps) => {
+export const ExpenseItem = ({ description, amount, date, id }: ExpenseItemProps) => {
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>, string>>()
 
     const expensePressHandler = () => {
-        navigation.navigate(MANAGE_EXPENSES_NAV)
+        navigation.navigate(MANAGE_EXPENSES_NAV, { expenseId: id })
     }
 
     return(

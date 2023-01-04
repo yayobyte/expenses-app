@@ -8,7 +8,7 @@ type ExpensesListProps = {
 
 const renderExpenseItem = ({ item }: { item: Expense }) => {
     return (
-        <ExpenseItem amount={item.amount} description={item.description} date={item.date} />
+        <ExpenseItem amount={item.amount} description={item.description} date={item.date} id={item.id} />
     )
 }
 
