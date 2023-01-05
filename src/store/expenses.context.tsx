@@ -1,4 +1,4 @@
-import React, {createContext, useReducer, ReducerState, ReducerAction, Reducer} from "react";
+import React, {createContext, useReducer, ReducerAction, Reducer} from "react";
 import {Expense} from "../constants";
 import uuid from "react-uuid";
 import {DUMMY_EXPENSES} from "../data";
@@ -11,9 +11,9 @@ enum ExpenseActions {
 
 export const ExpensesContext = createContext({
     expenses: [] as Array<Expense>,
-    [ExpenseActions.addExpense]: ({ description, amount, date }: Expense) => null,
+    [ExpenseActions.addExpense]: (expense: Expense) => null,
     [ExpenseActions.deleteExpense]: (id : Expense['id']) => null,
-    [ExpenseActions.updateExpense]: ({ id, description, amount, date }: Expense) => null
+    [ExpenseActions.updateExpense]: (expense: Expense) => null
 })
 
 export const expensesReducer = (state: Array<Expense>, action: ReducerAction<Reducer<string, any>>) => {
@@ -25,8 +25,8 @@ export const expensesReducer = (state: Array<Expense>, action: ReducerAction<Red
             const updatedItem = state[updateExpenseId] =  { ...action.payload }
             return [...state, ...updatedItem]
         case ExpenseActions.deleteExpense:
-            state.filter(({ id }) => id !== action.payload)
-            return [...state]
+            const filteredArray = state.filter(({ id }) => id !== action.payload)
+            return [...filteredArray]
         default:
             return state
     }

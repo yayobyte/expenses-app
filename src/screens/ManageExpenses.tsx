@@ -1,11 +1,11 @@
 import {View} from 'react-native'
 import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
-import {useLayoutEffect} from "react";
+import {useContext, useLayoutEffect} from "react";
 import {IconButton} from "../components/UI/IconButton";
 import {GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {Button} from "../components/UI/Button";
-import {DUMMY_EXPENSES} from "../data";
+import {ExpensesContext} from "../store/expenses.context";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -13,11 +13,13 @@ type ScreenNavigatorProps = {
 }
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
+    const { deleteExpense } = useContext(ExpensesContext)
     const id = route.params?.expenseId
     const isEditing = !!id
 
     const deleteExpenseHandler = () => {
-
+        deleteExpense(id)
+        navigation.goBack()
     }
 
     const cancelHandler = () => {
@@ -25,7 +27,6 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     }
 
     const confirmHandler = () => {
-
     }
 
     useLayoutEffect(() => {
