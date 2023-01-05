@@ -1,13 +1,23 @@
 import {View, Text} from "react-native";
 import {Input} from "../UI/Input";
-import {style} from "./ExpenseForm.styles";
+import {styles} from "./ExpenseForm.styles";
 import {useState} from "react";
+import {Button} from "../UI/Button";
+import {Expense} from "../../constants";
+import uuid from "react-uuid";
 
-export const ExpenseForm = () => {
+type ExpenseFormProps = {
+    onCancel: () => void
+    onSubmit: (expenseData: Expense) => void
+    submitLabel: string
+    defaultValues?: Expense
+}
 
-    const [amountValue, setAmountValue] = useState('')
-    const [dateValue, setDateValue] = useState('')
-    const [descriptionValue, setDescriptionValue] = useState('')
+export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: ExpenseFormProps) => {
+
+    const [amountValue, setAmountValue] = useState(defaultValues?.amount.toString() || '')
+    const [dateValue, setDateValue] = useState(defaultValues?.date.toLocaleDateString() || '')
+    const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
 
     const amountChangeHandler = (value: string) => {
         setAmountValue(value)
@@ -20,12 +30,23 @@ export const ExpenseForm = () => {
     const descriptionChangeHandler = (value: string) => {
         setDescriptionValue(value)
     }
+
+    const submitHandler = () => {
+        const expenseData: Expense = {
+            amount: +amountValue,
+            date: new Date(dateValue.slice(0,10)),
+            description: descriptionValue,
+            id: uuid(),
+        }
+        onSubmit(expenseData)
+    }
+
     return (
-        <View style={style.formStyle}>
-            <Text style={style.title}>Your Expense</Text>
-            <View style={style.inputsRow}>
+        <View style={styles.formStyle}>
+            <Text style={styles.title}>Your Expense</Text>
+            <View style={styles.inputsRow}>
                 <Input
-                    containerStyles={style.rowInput}
+                    containerStyles={styles.rowInput}
                     textInputConfig={{
                         keyboardType: 'decimal-pad',
                         onChangeText: amountChangeHandler,
@@ -34,9 +55,9 @@ export const ExpenseForm = () => {
                     label={'Amount'}
                 />
                 <Input
-                    containerStyles={style.rowInput}
+                    containerStyles={styles.rowInput}
                     textInputConfig={{
-                        placeholder: 'YYYY/MM/DD',
+                        placeholder: 'DD/MM/YYYY',
                         maxLength: 10,
                         onChangeText: dateChangeHandler,
                         value: dateValue,
@@ -52,6 +73,10 @@ export const ExpenseForm = () => {
                     }}
                     label={'Description'}
                 />
+            <View style={styles.buttonContainer}>
+                <Button onPress={onCancel} mode={'flat'} style={styles.button}>Cancel</Button>
+                <Button onPress={submitHandler} style={styles.button}>{submitLabel}</Button>
+            </View>
         </View>
     )
 }

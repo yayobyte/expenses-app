@@ -1,6 +1,5 @@
 import React, {createContext, useReducer, ReducerAction, Reducer} from "react";
 import {Expense} from "../constants";
-import uuid from "react-uuid";
 import {DUMMY_EXPENSES} from "../data";
 
 enum ExpenseActions {
@@ -19,11 +18,11 @@ export const ExpensesContext = createContext({
 export const expensesReducer = (state: Array<Expense>, action: ReducerAction<Reducer<string, any>>) => {
     switch (action.type) {
         case ExpenseActions.addExpense:
-            return [...state, {...action.payload, id: uuid()}]
+            return [...state, {...action.payload }]
         case ExpenseActions.updateExpense:
-            const updateExpenseId = state.findIndex(({ id }) => id === action.payload.id)
-            const updatedItem = state[updateExpenseId] =  { ...action.payload }
-            return [...state, ...updatedItem]
+            const updateExpenseIndex = state.findIndex(({ id }) => id === action.payload.id)
+            state[updateExpenseIndex] =  { ...action.payload }
+            return [...state]
         case ExpenseActions.deleteExpense:
             const filteredArray = state.filter(({ id }) => id !== action.payload)
             return [...filteredArray]

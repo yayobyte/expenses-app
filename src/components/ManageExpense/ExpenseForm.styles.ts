@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native";
 import {GlobalStyles} from "../../constants";
 
-export const style = StyleSheet.create({
+export const styles = StyleSheet.create({
     inputsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -18,5 +18,14 @@ export const style = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: GlobalStyles.spacing.xxl,
         textAlign: 'center',
+    },
+    buttonContainer: {
+        marginTop: GlobalStyles.spacing.l,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button: {
+        ...GlobalStyles.buttonSize,
     }
 })

@@ -14,13 +14,4 @@ export const styles = StyleSheet.create({
         borderTopColor: GlobalStyles.colors.primary200,
         alignItems: 'center',
     },
-    buttonContainer: {
-        marginTop: GlobalStyles.spacing.l,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    button: {
-        ...GlobalStyles.buttonSize,
-    }
 })

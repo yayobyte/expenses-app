@@ -2,9 +2,8 @@ import {View} from 'react-native'
 import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
 import {useContext, useLayoutEffect} from "react";
 import {IconButton} from "../components/UI/IconButton";
-import {GlobalStyles} from "../constants";
+import {Expense, GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
-import {Button} from "../components/UI/Button";
 import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 
@@ -14,9 +13,11 @@ type ScreenNavigatorProps = {
 }
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
-    const { deleteExpense } = useContext(ExpensesContext)
+    const { deleteExpense, addExpense, updateExpense, expenses } = useContext(ExpensesContext)
     const id = route.params?.expenseId
     const isEditing = !!id
+
+    const selectedExpense = expenses.find((expense) => expense.id === id)
 
     const deleteExpenseHandler = () => {
         deleteExpense(id)
@@ -27,7 +28,13 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
         navigation.goBack()
     }
 
-    const confirmHandler = () => {
+    const confirmHandler = (expense: Expense) => {
+        if(isEditing) {
+            updateExpense({ ...expense, id })
+        }else{
+            addExpense(expense)
+        }
+        navigation.goBack()
     }
 
     useLayoutEffect(() => {
@@ -38,11 +45,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     return (
         <View style={styles.container}>
-            <ExpenseForm />
-            <View style={styles.buttonContainer}>
-                <Button onPress={cancelHandler} mode={'flat'} style={styles.button}>Cancel</Button>
-                <Button onPress={confirmHandler} style={styles.button}>{isEditing ? 'Update' : 'Edit'}</Button>
-            </View>
+            <ExpenseForm onCancel={cancelHandler} onSubmit={confirmHandler} submitLabel={isEditing ? 'Update' : 'Add'} defaultValues={selectedExpense}/>
             {isEditing && (
                 <View style={styles.deleteContainer}>
                     <IconButton
