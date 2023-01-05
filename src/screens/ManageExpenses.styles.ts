@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
+        marginTop: GlobalStyles.spacing.l,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

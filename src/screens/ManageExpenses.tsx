@@ -6,6 +6,7 @@ import {GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {Button} from "../components/UI/Button";
 import {ExpensesContext} from "../store/expenses.context";
+import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -37,6 +38,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     return (
         <View style={styles.container}>
+            <ExpenseForm />
             <View style={styles.buttonContainer}>
                 <Button onPress={cancelHandler} mode={'flat'} style={styles.button}>Cancel</Button>
                 <Button onPress={confirmHandler} style={styles.button}>{isEditing ? 'Update' : 'Edit'}</Button>
