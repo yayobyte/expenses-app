@@ -1,7 +1,7 @@
 import {View, Text} from "react-native";
 import {Input} from "../UI/Input";
 import {styles} from "./ExpenseForm.styles";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "../UI/Button";
 import {Expense} from "../../constants";
 import uuid from "react-uuid";
@@ -20,6 +20,10 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
     const [isFormValid, setFormIsValid] = useState(true)
 
+    const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
+    const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && new Date(dateValue).toLocaleDateString().length === 10
+    const isValidDescription = descriptionValue.trim().length > 0
+
     const amountChangeHandler = (value: string) => {
         setAmountValue(value)
     }
@@ -33,10 +37,6 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     }
 
     const submitHandler = () => {
-        const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
-        const isValidDate = dateValue.toString() !== 'Invalid Date' && dateValue.toString().length === 10
-        const isValidDescription = descriptionValue.trim().length > 0
-
         if(isValidAmount && isValidDate && isValidDescription) {
             const expenseData: Expense = {
                 amount: +amountValue,
@@ -50,6 +50,10 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
         setFormIsValid(false)
     }
 
+    useEffect(() => {
+        setFormIsValid(true)
+    }, [amountValue, dateValue, descriptionValue])
+
     return (
         <View style={styles.formStyle}>
             <Text style={styles.title}>Your Expense</Text>
@@ -62,6 +66,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                         value: amountValue,
                     }}
                     label={'Amount'}
+                    isValid={isValidAmount}
                 />
                 <Input
                     containerStyles={styles.rowInput}
@@ -72,6 +77,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                         value: dateValue,
                     }}
                     label={'Date'}
+                    isValid={isValidDate}
                 />
             </View>
             <Input
@@ -81,6 +87,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                     value: descriptionValue,
                 }}
                 label={'Description'}
+                isValid={isValidDescription}
             />
             {!isFormValid && <Text style={styles.errorText}>Invalid Input Values, please check entered data</Text>}
             <View style={styles.buttonContainer}>

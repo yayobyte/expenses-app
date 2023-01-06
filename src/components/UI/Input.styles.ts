@@ -21,5 +21,11 @@ export const style = StyleSheet.create({
     inputMultiline: {
         minHeight: 100,
         textAlignVertical: 'top'
+    },
+    invalidLabel: {
+        color: GlobalStyles.colors.error500,
+    },
+    invalidInput: {
+        color: GlobalStyles.colors.error50,
     }
 })
