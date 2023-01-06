@@ -29,3 +29,11 @@ export const getExpenses = async () => {
     }
     return expenses
 }
+
+export const updateStoredExpenses = async (expense: Expense) => {
+    try {
+        await axios.put(baseUrl + `expenses/${expense.id}.json`, expense)
+    } catch(reason) {
+        console.warn(reason)
+    }
+}

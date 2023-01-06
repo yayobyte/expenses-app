@@ -6,7 +6,7 @@ import {Expense, GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
-import {storeExpense} from "../http";
+import {storeExpense, updateStoredExpenses} from "../http";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -31,6 +31,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     const confirmHandler = async (expense: Expense) => {
         if(isEditing) {
+            await updateStoredExpenses({ ...expense, id })
             updateExpense({ ...expense, id })
         }else{
             const id = await storeExpense(expense)
