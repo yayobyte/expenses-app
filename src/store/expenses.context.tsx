@@ -1,19 +1,20 @@
 import React, {createContext, useReducer, ReducerAction, Reducer, useEffect} from "react";
 import {Expense} from "../constants";
-import {DUMMY_EXPENSES} from "../data";
 import {getExpenses} from "../http";
 
 enum ExpenseActions {
     addExpense = 'addExpense',
     deleteExpense = 'deleteExpense',
     updateExpense = 'updateExpense',
+    setExpenses = 'setExpenses',
 }
 
 export const ExpensesContext = createContext({
     expenses: [] as Array<Expense>,
     [ExpenseActions.addExpense]: (expense: Expense) => null,
     [ExpenseActions.deleteExpense]: (id : Expense['id']) => null,
-    [ExpenseActions.updateExpense]: (expense: Expense) => null
+    [ExpenseActions.updateExpense]: (expense: Expense) => null,
+    [ExpenseActions.setExpenses]: (expenses: Array<Expense>) => null
 })
 
 export const expensesReducer = (state: Array<Expense>, action: ReducerAction<Reducer<string, any>>) => {
@@ -27,13 +28,15 @@ export const expensesReducer = (state: Array<Expense>, action: ReducerAction<Red
         case ExpenseActions.deleteExpense:
             const filteredArray = state.filter(({ id }) => id !== action.payload)
             return [...filteredArray]
+        case ExpenseActions.setExpenses:
+            return [...action.payload]
         default:
             return state
     }
 }
 
 export const ExpensesContextProvider = ({ children }: { children: React.ReactElement}) => {
-    const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES)
+    const [expensesState, dispatch] = useReducer(expensesReducer, [])
 
     const addExpense = (expense: Expense) => {
         dispatch({ type: ExpenseActions.addExpense, payload: expense })
@@ -47,6 +50,10 @@ export const ExpensesContextProvider = ({ children }: { children: React.ReactEle
         dispatch({ type: ExpenseActions.updateExpense, payload: expense })
     }
 
+    const setExpenses = (expenses: Array<Expense>) => {
+        dispatch({ type: ExpenseActions.setExpenses, payload: expenses })
+    }
+
     const value = {
         expenses: expensesState,
         addExpense,
@@ -55,7 +62,11 @@ export const ExpensesContextProvider = ({ children }: { children: React.ReactEle
     }
 
     useEffect(() => {
-        const expenses = getExpenses()
+        const fetchExpenses = async () => {
+            const expenses = await getExpenses()
+            setExpenses(expenses)
+        }
+        fetchExpenses()
     }, [])
 
     return (
