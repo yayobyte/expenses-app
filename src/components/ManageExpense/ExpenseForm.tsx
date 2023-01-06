@@ -13,16 +13,20 @@ type ExpenseFormProps = {
     defaultValues?: Expense
 }
 
+type Error = {
+    amount?: boolean
+    date?: boolean
+    description?: boolean
+}
+
 export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: ExpenseFormProps) => {
 
     const [amountValue, setAmountValue] = useState(defaultValues?.amount.toString() || '')
     const [dateValue, setDateValue] = useState(defaultValues?.date.toLocaleDateString() || '')
     const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
-    const [isFormValid, setFormIsValid] = useState(true)
+    const [error, setError] = useState<Error>({})
 
-    const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
-    const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && new Date(dateValue).toLocaleDateString().length === 10
-    const isValidDescription = descriptionValue.trim().length > 0
+    const isFormValid = Object.keys(error).length === 0
 
     const amountChangeHandler = (value: string) => {
         setAmountValue(value)
@@ -37,6 +41,10 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     }
 
     const submitHandler = () => {
+        const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
+        const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && new Date(dateValue).toLocaleDateString().length === 10
+        const isValidDescription = descriptionValue.trim().length > 0
+
         if(isValidAmount && isValidDate && isValidDescription) {
             const expenseData: Expense = {
                 amount: +amountValue,
@@ -44,14 +52,20 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                 description: descriptionValue,
                 id: uuid(),
             }
+            setError({})
             onSubmit(expenseData)
             return
         }
-        setFormIsValid(false)
+        setError({
+            ...!isValidAmount && { amount: true },
+            ...!isValidDate && { date: true },
+            ...!isValidDescription && { description: true },
+
+        })
     }
 
     useEffect(() => {
-        setFormIsValid(true)
+        setError({})
     }, [amountValue, dateValue, descriptionValue])
 
     return (
@@ -66,7 +80,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                         value: amountValue,
                     }}
                     label={'Amount'}
-                    isValid={isValidAmount}
+                    isValid={!error.amount}
                 />
                 <Input
                     containerStyles={styles.rowInput}
@@ -77,7 +91,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                         value: dateValue,
                     }}
                     label={'Date'}
-                    isValid={isValidDate}
+                    isValid={!error.date}
                 />
             </View>
             <Input
@@ -87,7 +101,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                     value: descriptionValue,
                 }}
                 label={'Description'}
-                isValid={isValidDescription}
+                isValid={!error.description}
             />
             {!isFormValid && <Text style={styles.errorText}>Invalid Input Values, please check entered data</Text>}
             <View style={styles.buttonContainer}>
