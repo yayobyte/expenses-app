@@ -11,6 +11,7 @@ import {LoadingOverlay} from "../components/UI/LoadingOverlay";
 import {useUpdateExpenses} from "../hooks/useUpdateExpenses";
 import {ErrorOverlay} from "../components/UI/ErrorOverlay";
 import {useStoreExpense} from "../hooks/useStoreExpense";
+import {useDeleteExpenses} from "../hooks/useDeleteExpense";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -18,21 +19,30 @@ type ScreenNavigatorProps = {
 }
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
-    const {deleteExpense, expenses} = useContext(ExpensesContext)
+    const {expenses} = useContext(ExpensesContext)
 
     const {
         loading: isLoadingUpdate,
         error: errorUpdate,
-        removeError: removeUpdateError,
+        UpdateErrorOverlay,
         updateExpenseApiCall,
     } = useUpdateExpenses()
 
     const {
         loading: isLoadingSave,
         error: errorSaving,
-        removeError: removeSavingError,
+        SaveExpenseErrorOverlay,
         storeExpenseApiCall,
     } = useStoreExpense()
+
+    const {
+        loading: isLoadingDelete,
+        DeleteErrorOverlay,
+        error: errorDeleting,
+        deleteExpenseApiCall,
+    } = useDeleteExpenses()
+
+    const hasError = errorSaving || errorUpdate || errorDeleting
 
     const id = route.params?.expenseId
     const isEditing = !!id
@@ -40,8 +50,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     const selectedExpense = expenses.find((expense) => expense.id === id)
 
     const deleteExpenseHandler = async () => {
-        await deleteStoredExpense(id)
-        deleteExpense(id)
+        await deleteExpenseApiCall(id)
         navigation.goBack()
     }
 
@@ -52,10 +61,11 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     const confirmHandler = async (expense: Expense) => {
         if (isEditing) {
             await updateExpenseApiCall({...expense, id})
+            !errorUpdate && navigation.goBack()
         } else {
             await storeExpenseApiCall(expense)
+            !errorSaving && navigation.goBack()
         }
-        navigation.goBack()
     }
 
     useLayoutEffect(() => {
@@ -64,23 +74,22 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
         })
     }, [navigation, isEditing])
 
-    if (isLoadingUpdate || isLoadingSave) {
+    if (isLoadingUpdate || isLoadingSave || isLoadingDelete) {
         return <LoadingOverlay/>
-    }
-
-    if (errorUpdate) {
-        return <ErrorOverlay message={errorUpdate} onPress={removeUpdateError}/>
-    }
-
-    if (errorSaving) {
-        return <ErrorOverlay message={errorSaving} onPress={removeSavingError}/>
     }
 
     return (
         <View style={styles.container}>
-            <ExpenseForm onCancel={cancelHandler} onSubmit={confirmHandler} submitLabel={isEditing ? 'Update' : 'Add'}
-                         defaultValues={selectedExpense}/>
-            {isEditing && (
+            {errorDeleting && <DeleteErrorOverlay />}
+            {errorUpdate && <UpdateErrorOverlay />}
+            {errorSaving && <SaveExpenseErrorOverlay />}
+            {!hasError && <ExpenseForm
+                onCancel={cancelHandler}
+                onSubmit={confirmHandler}
+                submitLabel={isEditing ? 'Update' : 'Add'}
+                defaultValues={selectedExpense}
+            />}
+            {isEditing && !hasError && (
                 <View style={styles.deleteContainer}>
                     <IconButton
                         size={GlobalStyles.iconSize.l}

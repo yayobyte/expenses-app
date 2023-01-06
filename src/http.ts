@@ -21,7 +21,7 @@ export const getExpenses = async () => {
 }
 
 export const updateStoredExpense = async (expense: Expense) => {
-    await axios.put( baseUrl + `expenses/${expense.id}.json`, expense)
+    await axios.put(baseUrl + `expenses/${expense.id}.json`, expense)
 }
 
 export const deleteStoredExpense = async (id: Expense['id']) => {

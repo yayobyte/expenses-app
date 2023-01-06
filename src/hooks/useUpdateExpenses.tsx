@@ -1,7 +1,8 @@
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {updateStoredExpense} from "../http";
 import {ExpensesContext} from "../store/expenses.context";
 import {Expense} from "../constants";
+import {ErrorOverlay} from "../components/UI/ErrorOverlay";
 
 export const useUpdateExpenses = () => {
     const { updateExpense } = useContext(ExpensesContext)
@@ -22,5 +23,11 @@ export const useUpdateExpenses = () => {
         }
     }
 
-    return { loading, error, removeError: () => setError(''), updateExpenseApiCall }
+    const UpdateErrorOverlay = () => {
+        return (
+            error.length > 0 ? <ErrorOverlay onPress={() => setError('')} message={error} /> : null
+        )
+    }
+
+    return { loading, error, UpdateErrorOverlay, updateExpenseApiCall }
 }

@@ -1,7 +1,8 @@
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {storeExpense} from "../http";
 import {ExpensesContext} from "../store/expenses.context";
 import {Expense} from "../constants";
+import {ErrorOverlay} from "../components/UI/ErrorOverlay";
 
 export const useStoreExpense = () => {
     const { addExpense } = useContext(ExpensesContext)
@@ -22,5 +23,11 @@ export const useStoreExpense = () => {
         }
     }
 
-    return { loading, error, removeError: () => setError(''), storeExpenseApiCall }
+    const SaveExpenseErrorOverlay = () => {
+        return (
+            error.length > 0 ? <ErrorOverlay onPress={() => setError('')} message={error} /> : null
+        )
+    }
+
+    return { loading, error, SaveExpenseErrorOverlay, storeExpenseApiCall }
 }
