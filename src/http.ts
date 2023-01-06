@@ -4,12 +4,8 @@ import axios from "axios";
 const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseio.com/'
 
 export const storeExpense = async (expense : Expense) => {
-    try {
-        const response = await axios.post(baseUrl + 'expenses.json', expense)
-        return response.data.name
-    } catch (reason) {
-        console.warn(reason)
-    }
+    const response = await axios.post(baseUrl + 'expenses.json', expense)
+    return response.data.name
 }
 
 export const getExpenses = async () => {
@@ -29,9 +25,5 @@ export const updateStoredExpense = async (expense: Expense) => {
 }
 
 export const deleteStoredExpense = async (id: Expense['id']) => {
-    try {
-        await axios.delete(baseUrl + `expenses/${id}.json`)
-    } catch (reason) {
-        console.log(reason)
-    }
+    await axios.delete(baseUrl + `expenses/${id}.json`)
 }
