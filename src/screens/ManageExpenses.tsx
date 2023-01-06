@@ -6,7 +6,7 @@ import {Expense, GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
-import {storeExpense, updateStoredExpenses} from "../http";
+import {deleteStoredExpense, storeExpense, updateStoredExpense} from "../http";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -20,7 +20,8 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     const selectedExpense = expenses.find((expense) => expense.id === id)
 
-    const deleteExpenseHandler = () => {
+    const deleteExpenseHandler = async () => {
+        await deleteStoredExpense(id)
         deleteExpense(id)
         navigation.goBack()
     }
@@ -31,7 +32,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     const confirmHandler = async (expense: Expense) => {
         if(isEditing) {
-            await updateStoredExpenses({ ...expense, id })
+            await updateStoredExpense({ ...expense, id })
             updateExpense({ ...expense, id })
         }else{
             const id = await storeExpense(expense)
