@@ -1,7 +1,7 @@
 import {Expense} from "./constants";
 import axios from "axios";
 
-const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseio.com/'
+const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseiocom/'
 
 export const storeExpense = async (expense : Expense) => {
     try {
@@ -13,21 +13,15 @@ export const storeExpense = async (expense : Expense) => {
 }
 
 export const getExpenses = async () => {
-    let expenses: Array<Expense> = []
-    try {
-        const response = await axios.get(baseUrl + 'expenses.json')
-        expenses = Object.keys(response.data).map((key) => {
-            return {
-                id: key,
-                amount: response.data[key].amount,
-                date: new Date(response.data[key].date),
-                description: response.data[key].description,
-            }
-        })
-    }catch (reason) {
-        console.warn(reason)
-    }
-    return expenses
+    const response = await axios.get(baseUrl + 'expenses.json')
+    return  Object.keys(response.data).map((key) => {
+        return {
+            id: key,
+            amount: response.data[key].amount,
+            date: new Date(response.data[key].date),
+            description: response.data[key].description,
+        }
+    }) as Array<Expense>
 }
 
 export const updateStoredExpense = async (expense: Expense) => {
