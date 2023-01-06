@@ -8,6 +8,8 @@ import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 import {deleteStoredExpense, storeExpense, updateStoredExpense} from "../http";
 import {LoadingOverlay} from "../components/UI/LoadingOverlay";
+import {useUpdateExpenses} from "../hooks/useUpdateExpenses";
+import {ErrorOverlay} from "../components/UI/ErrorOverlay";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -15,8 +17,15 @@ type ScreenNavigatorProps = {
 }
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
-    const { deleteExpense, addExpense, updateExpense, expenses } = useContext(ExpensesContext)
+    const {deleteExpense, addExpense, expenses} = useContext(ExpensesContext)
     const [isLoading, setIsLoading] = useState(false)
+
+    const {
+        loading: isLoadingUpdate,
+        error: errorUpdate,
+        removeError,
+        updateExpenseApiCall,
+    } = useUpdateExpenses()
 
     const id = route.params?.expenseId
     const isEditing = !!id
@@ -37,12 +46,11 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     const confirmHandler = async (expense: Expense) => {
         setIsLoading(true)
-        if(isEditing) {
-            await updateStoredExpense({ ...expense, id })
-            updateExpense({ ...expense, id })
-        }else{
+        if (isEditing) {
+            await updateExpenseApiCall({...expense, id})
+        } else {
             const id = await storeExpense(expense)
-            addExpense({ ...expense, id})
+            addExpense({...expense, id})
         }
         setIsLoading(false)
         navigation.goBack()
@@ -54,13 +62,20 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
         })
     }, [navigation, isEditing])
 
-    if (isLoading) {
-        return <LoadingOverlay />
+    if (isLoading || isLoadingUpdate) {
+        return <LoadingOverlay/>
     }
+
+    if (errorUpdate) {
+        return <ErrorOverlay message={errorUpdate} onPress={removeError}/>
+    }
+
+    console.log({errorUpdate})
 
     return (
         <View style={styles.container}>
-            <ExpenseForm onCancel={cancelHandler} onSubmit={confirmHandler} submitLabel={isEditing ? 'Update' : 'Add'} defaultValues={selectedExpense}/>
+            <ExpenseForm onCancel={cancelHandler} onSubmit={confirmHandler} submitLabel={isEditing ? 'Update' : 'Add'}
+                         defaultValues={selectedExpense}/>
             {isEditing && (
                 <View style={styles.deleteContainer}>
                     <IconButton

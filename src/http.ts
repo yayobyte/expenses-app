@@ -1,7 +1,7 @@
 import {Expense} from "./constants";
 import axios from "axios";
 
-const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseiocom/'
+const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseio.com/'
 
 export const storeExpense = async (expense : Expense) => {
     try {
@@ -25,11 +25,7 @@ export const getExpenses = async () => {
 }
 
 export const updateStoredExpense = async (expense: Expense) => {
-    try {
-        await axios.put(baseUrl + `expenses/${expense.id}.json`, expense)
-    } catch(reason) {
-        console.warn(reason)
-    }
+    await axios.put( baseUrl + `expenses/${expense.id}.json`, expense)
 }
 
 export const deleteStoredExpense = async (id: Expense['id']) => {
