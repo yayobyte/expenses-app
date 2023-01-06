@@ -42,7 +42,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
 
     const submitHandler = () => {
         const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
-        const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && new Date(dateValue).toLocaleDateString().length === 10
+        const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && dateValue.length === 10
         const isValidDescription = descriptionValue.trim().length > 0
 
         if(isValidAmount && isValidDate && isValidDescription) {
@@ -85,7 +85,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                 <Input
                     containerStyles={styles.rowInput}
                     textInputConfig={{
-                        placeholder: 'DD/MM/YYYY',
+                        placeholder: 'MM/DD/YYYY',
                         maxLength: 10,
                         onChangeText: dateChangeHandler,
                         value: dateValue,

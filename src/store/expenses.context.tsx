@@ -1,6 +1,7 @@
-import React, {createContext, useReducer, ReducerAction, Reducer} from "react";
+import React, {createContext, useReducer, ReducerAction, Reducer, useEffect} from "react";
 import {Expense} from "../constants";
 import {DUMMY_EXPENSES} from "../data";
+import {getExpenses} from "../http";
 
 enum ExpenseActions {
     addExpense = 'addExpense',
@@ -52,6 +53,10 @@ export const ExpensesContextProvider = ({ children }: { children: React.ReactEle
         deleteExpense,
         updateExpense,
     }
+
+    useEffect(() => {
+        const expenses = getExpenses()
+    }, [])
 
     return (
         <ExpensesContext.Provider value={value}>{children}</ExpensesContext.Provider>

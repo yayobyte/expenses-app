@@ -6,6 +6,7 @@ import {Expense, GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
+import {storeExpense} from "../http";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -32,6 +33,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
         if(isEditing) {
             updateExpense({ ...expense, id })
         }else{
+            storeExpense(expense)
             addExpense(expense)
         }
         navigation.goBack()
