@@ -1,12 +1,13 @@
 import {View} from 'react-native'
 import {NavigationProp, ParamListBase, RouteProp} from "@react-navigation/native";
-import {useContext, useLayoutEffect} from "react";
+import {useContext, useLayoutEffect, useState} from "react";
 import {IconButton} from "../components/UI/IconButton";
 import {Expense, GlobalStyles} from "../constants";
 import {styles} from "./ManageExpenses.styles";
 import {ExpensesContext} from "../store/expenses.context";
 import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 import {deleteStoredExpense, storeExpense, updateStoredExpense} from "../http";
+import {LoadingOverlay} from "../components/UI/LoadingOverlay";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -15,13 +16,17 @@ type ScreenNavigatorProps = {
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     const { deleteExpense, addExpense, updateExpense, expenses } = useContext(ExpensesContext)
+    const [isLoading, setIsLoading] = useState(false)
+
     const id = route.params?.expenseId
     const isEditing = !!id
 
     const selectedExpense = expenses.find((expense) => expense.id === id)
 
     const deleteExpenseHandler = async () => {
+        setIsLoading(true)
         await deleteStoredExpense(id)
+        setIsLoading(false)
         deleteExpense(id)
         navigation.goBack()
     }
@@ -32,10 +37,14 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     const confirmHandler = async (expense: Expense) => {
         if(isEditing) {
+            setIsLoading(true)
             await updateStoredExpense({ ...expense, id })
+            setIsLoading(false)
             updateExpense({ ...expense, id })
         }else{
+            setIsLoading(true)
             const id = await storeExpense(expense)
+            setIsLoading(false)
             addExpense({ ...expense, id})
         }
         navigation.goBack()
@@ -46,6 +55,10 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
             title: isEditing ? 'Edit Expense' : 'Add Expense'
         })
     }, [navigation, isEditing])
+
+    if (isLoading) {
+        return <LoadingOverlay />
+    }
 
     return (
         <View style={styles.container}>

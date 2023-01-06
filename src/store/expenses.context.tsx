@@ -1,6 +1,5 @@
-import React, {createContext, useReducer, ReducerAction, Reducer, useEffect} from "react";
+import React, {createContext, useReducer, ReducerAction, Reducer} from "react";
 import {Expense} from "../constants";
-import {getExpenses} from "../http";
 
 enum ExpenseActions {
     addExpense = 'addExpense',
@@ -59,15 +58,8 @@ export const ExpensesContextProvider = ({ children }: { children: React.ReactEle
         addExpense,
         deleteExpense,
         updateExpense,
+        setExpenses,
     }
-
-    useEffect(() => {
-        const fetchExpenses = async () => {
-            const expenses = await getExpenses()
-            setExpenses(expenses)
-        }
-        fetchExpenses()
-    }, [])
 
     return (
         <ExpensesContext.Provider value={value}>{children}</ExpensesContext.Provider>
