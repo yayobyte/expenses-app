@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, Alert} from "react-native";
 import {Input} from "../UI/Input";
 import {styles} from "./ExpenseForm.styles";
 import {useState} from "react";
@@ -32,13 +32,21 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     }
 
     const submitHandler = () => {
-        const expenseData: Expense = {
-            amount: +amountValue,
-            date: new Date(dateValue.slice(0,10)),
-            description: descriptionValue,
-            id: uuid(),
+        const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
+        const isValidDate = dateValue.toString() !== 'Invalid Date' && dateValue.toString().length === 10
+        const isValidDescription = descriptionValue.trim().length > 0
+
+        if(isValidAmount && isValidDate && isValidDescription) {
+            const expenseData: Expense = {
+                amount: +amountValue,
+                date: new Date(dateValue.slice(0,10)),
+                description: descriptionValue,
+                id: uuid(),
+            }
+            onSubmit(expenseData)
+            return
         }
-        onSubmit(expenseData)
+        Alert.alert('Invalid Input')
     }
 
     return (
