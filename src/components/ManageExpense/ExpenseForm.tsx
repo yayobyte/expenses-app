@@ -1,4 +1,4 @@
-import {View, Text, Alert} from "react-native";
+import {View, Text} from "react-native";
 import {Input} from "../UI/Input";
 import {styles} from "./ExpenseForm.styles";
 import {useState} from "react";
@@ -18,6 +18,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     const [amountValue, setAmountValue] = useState(defaultValues?.amount.toString() || '')
     const [dateValue, setDateValue] = useState(defaultValues?.date.toLocaleDateString() || '')
     const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
+    const [isFormValid, setFormIsValid] = useState(true)
 
     const amountChangeHandler = (value: string) => {
         setAmountValue(value)
@@ -46,7 +47,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
             onSubmit(expenseData)
             return
         }
-        Alert.alert('Invalid Input')
+        setFormIsValid(false)
     }
 
     return (
@@ -73,14 +74,15 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                     label={'Date'}
                 />
             </View>
-                <Input
-                    textInputConfig={{
-                        multiline: true,
-                        onChangeText: descriptionChangeHandler,
-                        value: descriptionValue,
-                    }}
-                    label={'Description'}
-                />
+            <Input
+                textInputConfig={{
+                    multiline: true,
+                    onChangeText: descriptionChangeHandler,
+                    value: descriptionValue,
+                }}
+                label={'Description'}
+            />
+            {!isFormValid && <Text style={styles.errorText}>Invalid Input Values, please check entered data</Text>}
             <View style={styles.buttonContainer}>
                 <Button onPress={onCancel} mode={'flat'} style={styles.button}>Cancel</Button>
                 <Button onPress={submitHandler} style={styles.button}>{submitLabel}</Button>

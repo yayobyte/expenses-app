@@ -27,5 +27,10 @@ export const styles = StyleSheet.create({
     },
     button: {
         ...GlobalStyles.buttonSize,
+    },
+    errorText: {
+        textAlign: 'center',
+        color: GlobalStyles.colors.error500,
+        margin: GlobalStyles.spacing.m,
     }
 })
