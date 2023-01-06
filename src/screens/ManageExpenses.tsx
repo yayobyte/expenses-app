@@ -29,12 +29,12 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
         navigation.goBack()
     }
 
-    const confirmHandler = (expense: Expense) => {
+    const confirmHandler = async (expense: Expense) => {
         if(isEditing) {
             updateExpense({ ...expense, id })
         }else{
-            storeExpense(expense)
-            addExpense(expense)
+            const id = await storeExpense(expense)
+            addExpense({ ...expense, id})
         }
         navigation.goBack()
     }

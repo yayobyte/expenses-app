@@ -4,7 +4,6 @@ import {styles} from "./ExpenseForm.styles";
 import {useEffect, useState} from "react";
 import {Button} from "../UI/Button";
 import {Expense} from "../../constants";
-import uuid from "react-uuid";
 
 type ExpenseFormProps = {
     onCancel: () => void
@@ -50,7 +49,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                 amount: +amountValue,
                 date: new Date(dateValue.slice(0,10)),
                 description: descriptionValue,
-                id: uuid(),
+                id: '',
             }
             setError({})
             onSubmit(expenseData)
