@@ -36,17 +36,15 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     }
 
     const confirmHandler = async (expense: Expense) => {
+        setIsLoading(true)
         if(isEditing) {
-            setIsLoading(true)
             await updateStoredExpense({ ...expense, id })
-            setIsLoading(false)
             updateExpense({ ...expense, id })
         }else{
-            setIsLoading(true)
             const id = await storeExpense(expense)
-            setIsLoading(false)
             addExpense({ ...expense, id})
         }
+        setIsLoading(false)
         navigation.goBack()
     }
 
