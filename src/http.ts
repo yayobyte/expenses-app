@@ -1,7 +1,7 @@
 import {Expense} from "./constants";
 import axios from "axios";
 
-const baseUrl = 'https://expenses-app-backend-default-rtdb.firebaseio.com/'
+const baseUrl = 'https://expenses-app-2c964-default-rtdb.firebaseio.com/'
 
 export const storeExpense = async (expense : Expense) => {
     const response = await axios.post(baseUrl + 'expenses.json', expense)
