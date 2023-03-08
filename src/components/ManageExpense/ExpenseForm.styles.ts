@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     formStyle: {
-        marginTop: GlobalStyles.spacing.l,
+        marginTop: GlobalStyles.spacing.xxl + GlobalStyles.spacing.xxl,
     },
     title: {
         fontSize: GlobalStyles.fontSize.h1,
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     buttonContainer: {
-        marginTop: GlobalStyles.spacing.xxl + GlobalStyles.spacing.xxl,
+        marginTop: GlobalStyles.spacing.l,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
