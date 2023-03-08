@@ -91,7 +91,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
                 <View style={styles.deleteContainer}>
                     <IconButton
                         size={GlobalStyles.iconSize.l}
-                        color={GlobalStyles.colors.error500}
+                        color={GlobalStyles.colors.error50}
                         onPress={deleteExpenseHandler}
                         icon={'trash'}
                     />

@@ -23,9 +23,9 @@ export const style = StyleSheet.create({
         textAlignVertical: 'top'
     },
     invalidLabel: {
-        color: GlobalStyles.colors.error500,
+        color: GlobalStyles.colors.error50,
     },
     invalidInput: {
-        color: GlobalStyles.colors.error50,
+        color: GlobalStyles.colors.error500,
     }
 })

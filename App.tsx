@@ -21,7 +21,7 @@ const ExpensesOverview = () => {
                 backgroundColor: GlobalStyles.colors.primary500,
             },
             headerTintColor: 'white',
-            tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
+            tabBarStyle: {backgroundColor: GlobalStyles.colors.primary800},
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
             headerRight: ({tintColor}) => (<
                     IconButton icon={'add'} size={GlobalStyles.iconSize.m} color={tintColor}

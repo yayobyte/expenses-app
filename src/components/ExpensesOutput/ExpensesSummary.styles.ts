@@ -9,14 +9,15 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: GlobalStyles.spacing.xl,
     },
     period: {
         fontSize: GlobalStyles.fontSize.default,
-        color: GlobalStyles.colors.primary400,
+        color: GlobalStyles.colors.primary700,
     },
     sum: {
         fontSize: GlobalStyles.fontSize.h3,
         fontWeight: 'bold',
-        color: GlobalStyles.colors.primary500,
+        color: GlobalStyles.colors.primary700,
     }
 })
