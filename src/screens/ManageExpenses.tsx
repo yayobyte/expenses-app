@@ -9,6 +9,7 @@ import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 import {deleteStoredExpense, storeExpense, updateStoredExpense} from "../http";
 import {LoadingOverlay} from "../components/UI/LoadingOverlay";
 import {ErrorOverlay} from "../components/UI/ErrorOverlay";
+import { useFlag } from '@unleash/proxy-client-react';
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -17,6 +18,7 @@ type ScreenNavigatorProps = {
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
     const {expenses, updateExpense, deleteExpense, addExpense} = useContext(ExpensesContext)
+    const isDeleteExpenseEnabled = useFlag('deleteExpense');
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -87,7 +89,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
                 submitLabel={isEditing ? 'Update' : 'Add'}
                 defaultValues={selectedExpense}
             />
-            {isEditing && (
+            {isDeleteExpenseEnabled && isEditing && (
                 <View style={styles.deleteContainer}>
                     <IconButton
                         size={GlobalStyles.iconSize.l}

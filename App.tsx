@@ -63,7 +63,7 @@ const ExpensesOverview = () => {
 
 export default function App() {
     return (
-        <React.Fragment>
+        <>
             <FlagProvider config={config}>
                 <StatusBar style="dark"/>
                 <ExpensesContextProvider>
@@ -88,7 +88,7 @@ export default function App() {
                     </NavigationContainer>
                 </ExpensesContextProvider>
             </FlagProvider>
-        </React.Fragment>
+        </>
     );
 }
 
