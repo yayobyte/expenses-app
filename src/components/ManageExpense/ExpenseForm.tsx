@@ -1,9 +1,10 @@
 import {View, Text} from "react-native";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {Input} from "../UI/Input";
 import {styles} from "./ExpenseForm.styles";
 import {useEffect, useState} from "react";
 import {Button} from "../UI/Button";
-import { Expense } from "../../constants";
+import { Expense, GlobalStyles } from "../../constants";
 
 type ExpenseFormProps = {
     onCancel: () => void
@@ -21,9 +22,15 @@ type Error = {
 export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: ExpenseFormProps) => {
 
     const [amountValue, setAmountValue] = useState(defaultValues?.amount.toString() || '')
-    const [dateValue, setDateValue] = useState(defaultValues?.date.toLocaleDateString() || '')
+    const [dateValue, setDateValue] = useState(defaultValues?.date || new Date())
     const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
     const [error, setError] = useState<Error>({})
+    
+    const onChange = (event: any, selectedDate: any) => {
+        const currentDate = selectedDate;
+        setDateValue(currentDate);
+    };
+    
     
     const isFormValid = Object.keys(error).length === 0
 
@@ -32,7 +39,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     }
 
     const dateChangeHandler = (value: string) => {
-        setDateValue(value)
+        setDateValue(new Date(value))
     }
 
     const descriptionChangeHandler = (value: string) => {
@@ -41,13 +48,13 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
 
     const submitHandler = () => {
         const isValidAmount = !isNaN(+amountValue) && +amountValue > 0
-        const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date' && dateValue.length === 10
+        const isValidDate = new Date(dateValue).toLocaleDateString() !== 'Invalid Date'
         const isValidDescription = descriptionValue.trim().length > 0
 
         if(isValidAmount && isValidDate && isValidDescription) {
             const expenseData: Expense = {
                 amount: +amountValue,
-                date: new Date(dateValue.slice(0,10)),
+                date: dateValue,
                 description: descriptionValue,
                 id: '',
             }
@@ -81,17 +88,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                     label={'Amount'}
                     isValid={!error.amount}
                 />
-                <Input
-                    containerStyles={styles.rowInput}
-                    textInputConfig={{
-                        placeholder: 'MM/DD/YYYY',
-                        maxLength: 10,
-                        onChangeText: dateChangeHandler,
-                        value: dateValue,
-                    }}
-                    label={'Date'}
-                    isValid={!error.date}
-                />
+                
             </View>
             <Input
                 textInputConfig={{
@@ -102,6 +99,17 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                 label={'Description'}
                 isValid={!error.description}
             />
+            <DateTimePicker
+                testID="dateTimePicker"
+                value={dateValue}
+                mode={'date'}
+                is24Hour={false}
+                onChange={onChange}
+                maximumDate={new Date()}
+                display={'spinner'}
+                textColor={'white'}
+            />
+            
             {!isFormValid && <Text style={styles.errorText}>Invalid Input Values, please check entered data</Text>}
             <View style={styles.buttonContainer}>
                 <Button onPress={onCancel} mode={'flat'} style={styles.button}>Cancel</Button>
