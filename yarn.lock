@@ -1888,6 +1888,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@unleash/proxy-client-react@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@unleash/proxy-client-react/-/proxy-client-react-3.5.2.tgz#32a0218a5187995b93d300543519633f2043c779"
+  integrity sha512-5Y3sfZadCPmJ3xaXrcIlrYeVVYzz7JQF8zDu9x46Ea2uBM7A5lVpYfdoIVkTnuK6xFoPxyByUGHhSNuH24x1bA==
+
 "@urql/core@2.3.6":
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/@urql/core/-/core-2.3.6.tgz#ee0a6f8fde02251e9560c5f17dce5cd90f948552"
@@ -6415,6 +6420,11 @@ through@2:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
+tiny-emitter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+  integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -6620,6 +6630,14 @@ universalify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
+
+unleash-proxy-client@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/unleash-proxy-client/-/unleash-proxy-client-2.4.3.tgz#47588a66812b92bacc5e8aaafe1acb06e50893b8"
+  integrity sha512-ILJIHNSeh7ajHczemNE19Rl3NpVU3voFouYIgWCbJd+OhuJ9elfpuD1LF5yucEJq8AuWKkEM2AzUFFOTiv/2Sw==
+  dependencies:
+    tiny-emitter "^2.1.0"
+    uuid "^8.3.2"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
