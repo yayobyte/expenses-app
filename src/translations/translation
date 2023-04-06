@@ -1,4 +1,4 @@
-export const translations = {
+export const translation = {
   en: {
     RECENT_EXPENSES: 'Recent Expenses',
     LAST_7_DAYS: 'Last 7 days',

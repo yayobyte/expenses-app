@@ -1,10 +1,10 @@
 import express from 'express';
-import translations from './translation';
+import translation from './translation';
 
 const app = express();
 app.use(express.json());
 
-const PROT = 3000;
+const PORT = 3000;
 
 app.get('/', (req, res) => {
   res.json('');
@@ -12,16 +12,14 @@ app.get('/', (req, res) => {
 
 app.post('/translate', (req, res) => {
   try {
-    const  translate  = req.body;
-    const result = translations[translate];
-      res.send(result);
- 
+    const translate = req.body;
+    const result = translation[translate];
+    res.send(result);
   } catch (error) {
     console.log(error);
   }
 });
 
-
-app.listen(PROT, () => {
-  console.log('server listening on port ' + PROT);
+app.listen(PORT, () => {
+  console.log('server listening on port ' + PORT);
 });
