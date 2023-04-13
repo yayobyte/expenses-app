@@ -6,10 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { AllExpenses } from "../screens/AllExpenses";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useTranslation } from "react-i18next";
 
 const BottomTabs = createBottomTabNavigator()
 
 export const ExpensesOverview = () => {
+	const { t } = useTranslation()
 	return (
 		<BottomTabs.Navigator screenOptions={({navigation}) => ({
 			headerStyle: {
@@ -27,8 +29,8 @@ export const ExpensesOverview = () => {
 				name={"RecentExpenses"}
 				component={RecentExpenses}
 				options={{
-					title: 'Recent Expenses',
-					tabBarLabel: 'Recent',
+					title: t('RECENT_EXPENSES') || '',
+					tabBarLabel: t('RECENT') || '',
 					tabBarIcon: ({color, size}) => (
 						<Ionicons name={'time'} size={size} color={color}/>
 					)
@@ -38,8 +40,8 @@ export const ExpensesOverview = () => {
 				name={"AllExpenses"}
 				component={AllExpenses}
 				options={{
-					title: 'All Expenses',
-					tabBarLabel: 'All Expenses',
+					title: t('ALL_EXPENSES') || '',
+					tabBarLabel: t('ALL_EXPENSES') || '',
 					tabBarIcon: ({color, size}) => <Ionicons name={'calendar'} size={size} color={color}/>
 				}}
 			/>
