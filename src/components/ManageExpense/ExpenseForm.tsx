@@ -5,6 +5,7 @@ import {styles} from "./ExpenseForm.styles";
 import {useEffect, useState} from "react";
 import {Button} from "../UI/Button";
 import { Expense, GlobalStyles } from "../../constants";
+import { useTranslation } from "react-i18next";
 
 type ExpenseFormProps = {
     onCancel: () => void
@@ -25,6 +26,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
     const [dateValue, setDateValue] = useState(defaultValues?.date || new Date())
     const [descriptionValue, setDescriptionValue] = useState(defaultValues?.description || '')
     const [error, setError] = useState<Error>({})
+	const { t } = useTranslation()
     
     const onChange = (event: any, selectedDate: any) => {
         const currentDate = selectedDate;
@@ -76,7 +78,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
 
     return (
         <View style={styles.formStyle}>
-            <Text style={styles.title}>Your Expense</Text>
+            <Text style={styles.title}>{t('YOUR_EXPENSE')}</Text>
             <View style={styles.inputsRow}>
                 <Input
                     containerStyles={styles.rowInput}
@@ -85,7 +87,7 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                         onChangeText: amountChangeHandler,
                         value: amountValue,
                     }}
-                    label={'Amount'}
+                    label={t('AMOUNT')}
                     isValid={!error.amount}
                 />
                 
@@ -95,8 +97,9 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                     multiline: true,
                     onChangeText: descriptionChangeHandler,
                     value: descriptionValue,
+	                
                 }}
-                label={'Description'}
+                label={t('DESCRIPTION')}
                 isValid={!error.description}
             />
             <DateTimePicker
@@ -110,9 +113,9 @@ export const ExpenseForm = ({ onCancel, onSubmit, submitLabel, defaultValues }: 
                 textColor={'white'}
             />
             
-            {!isFormValid && <Text style={styles.errorText}>Invalid Input Values, please check entered data</Text>}
+            {!isFormValid && <Text style={styles.errorText}>{t('INVALID_INPUT_DATES_CHECK_ENTERED_DATA')}</Text>}
             <View style={styles.buttonContainer}>
-                <Button onPress={onCancel} mode={'flat'} style={styles.button}>Cancel</Button>
+                <Button onPress={onCancel} mode={'flat'} style={styles.button}>{t('CANCEL') || ''}</Button>
                 <Button onPress={submitHandler} style={styles.button}>{submitLabel}</Button>
             </View>
         </View>

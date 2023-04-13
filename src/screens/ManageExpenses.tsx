@@ -9,6 +9,7 @@ import {ExpenseForm} from "../components/ManageExpense/ExpenseForm";
 import {deleteStoredExpense, storeExpense, updateStoredExpense} from "../http";
 import {LoadingOverlay} from "../components/UI/LoadingOverlay";
 import {ErrorOverlay} from "../components/UI/ErrorOverlay";
+import { useTranslation } from "react-i18next";
 
 type ScreenNavigatorProps = {
     route: RouteProp<{ params: Readonly<Record<string, string>> }>
@@ -16,6 +17,8 @@ type ScreenNavigatorProps = {
 }
 
 export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
+	const { t } = useTranslation();
+	
     const {expenses, updateExpense, deleteExpense, addExpense} = useContext(ExpensesContext)
 
     const [loading, setLoading] = useState(false)
@@ -34,7 +37,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
             setError('')
             cancelHandler()
         } catch (reason) {
-            setError('Unable to delete the Expense')
+            setError(() => t('UNABLE_TO_DELETE_EXPENSE'))
             console.warn(reason)
         } finally {
             setLoading(false)
@@ -58,7 +61,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
             setError('')
             cancelHandler()
         } catch (reason) {
-            setError('Unable to submit Expense')
+            setError(() => t('UNABLE_TO_SUBMIT_EXPENSE'))
             console.warn(reason)
         } finally {
             setLoading(false)
@@ -67,7 +70,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: isEditing ? 'Edit Expense' : 'Add Expense'
+            title: isEditing ? t('EDIT_EXPENSES') : t('ADD_EXPENSES')
         })
     }, [navigation, isEditing])
 
@@ -84,7 +87,7 @@ export const ManageExpenses = ({route, navigation}: ScreenNavigatorProps) => {
             <ExpenseForm
                 onCancel={cancelHandler}
                 onSubmit={confirmHandler}
-                submitLabel={isEditing ? 'Update' : 'Add'}
+                submitLabel={isEditing ? t('UPDATE') : t('ADD')}
                 defaultValues={selectedExpense}
             />
             {isEditing && (
