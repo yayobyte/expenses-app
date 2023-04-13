@@ -1,22 +1,23 @@
 import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import ar from '../../translationService/ar.json';
 import en from '../../translationService/en.json';
+import I18NextHttpBackend from 'i18next-http-backend';
 
 const resources = {
   ar: {
-    ar: ar,
+    translation: ar,
   },
   en: {
-    en: en,
+    translation: en,
   },
 };
 
-i18next.init({
+i18next.use(I18NextHttpBackend).use(initReactI18next).init({
   lng: 'en',
   debug: true,
   resources,
-  fallbackLng: 'en',
-  saveMissing: true,
+  fallbackLng: 'ar',
 });
 
 export default i18next;

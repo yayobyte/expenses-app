@@ -1,16 +1,22 @@
 {
   "RECENT_EXPENSES": "العمليات الأخيرة",
-  "LAST_7_DAYS": "أخر ٧ عمليات",
+  "LAST": "أخر",
+  "DAYS": "أيام",
   "RECENT": "العمليات الحديثة",
   "ALL_EXPENSES": "جميع المصروفات",
   "TOTAL": "المجموع",
   "BACK": "الخلف",
-  "ADD_EXPENSES": "اضافة انفاق جديد",
-  "YOUR_EXPENSES": "مصصروفاتك",
+  "ADD_EXPENSE": "اضافة انفاق جديد",
+  "YOUR_EXPENSE": "مصروفاتك",
   "DESCRIPTION": "الوصف",
   "CANCEL": "إلغاء",
   "ADD": "إضافة",
   "AMOUNT": "المبلغ",
-  "EDIT_EXPENSES": "تعديل التفاصيل",
-  "UPDATE": "تحديث"
+  "EDIT_EXPENSE": "تعديل التفاصيل",
+  "UPDATE": "تحديث",
+  "NO_EXPENSES": "لا توجد مصروفات",
+  "INVALID_INPUT_CHECK_ENTERED_DATA": "المذخلات غير صحيحة، الرجاء التحقق من مدخلاتك",
+  "AN_ERROR_OCCURRED": "حدث خطآ ما",
+  "UNABLE_TO_DELETE_EXPENSE": "نأسف غير قادرون على الحذف، حاول مرة اخرى",
+  "UNABLE_TO_SUBMIT_EXPENSE": "نأسف غير قادرون على ارسال مدخلاتك، حاول مرة اخرى"
 }
