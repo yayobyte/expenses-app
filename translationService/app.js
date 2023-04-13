@@ -6,7 +6,7 @@ const ar = require('./ar.json')
 const app = express();
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.get('/', async (req, res) => {
     res.send('it works')
