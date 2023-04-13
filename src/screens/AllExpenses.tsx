@@ -4,9 +4,11 @@ import {ExpensesContext} from "../store/expenses.context";
 import {useGetExpenses} from "../hooks/useGetExpenses";
 import {LoadingOverlay} from "../components/UI/LoadingOverlay";
 import {ErrorOverlay} from "../components/UI/ErrorOverlay";
+import { useTranslation } from "react-i18next";
 export const AllExpenses = () => {
     const { expenses } = useContext(ExpensesContext)
     const { loading, error, removeError} = useGetExpenses()
+	const { t } = useTranslation()
 
     if (loading) {
         return <LoadingOverlay />
@@ -17,6 +19,6 @@ export const AllExpenses = () => {
     }
 
     return (
-        <ExpensesOutput expenses={expenses} expensesPeriod={"Total"} fallbackText={'No expenses'}/>
+        <ExpensesOutput expenses={expenses} expensesPeriod={t("TOTAL")} fallbackText={t('NO_EXPENSES')}/>
     )
 }

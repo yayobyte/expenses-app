@@ -3,11 +3,13 @@ import {useContext} from "react";
 import {ExpensesContext} from "../store/expenses.context";
 import {useGetExpenses} from "../hooks/useGetExpenses";
 import {LoadingOverlay} from "../components/UI/LoadingOverlay";
+import { useTranslation } from "react-i18next";
 
 const EXPENSES_DAYS = 7
 
 export const RecentExpenses = () => {
     const { expenses } = useContext(ExpensesContext)
+	const { t } = useTranslation()
 
     const recentExpenses = expenses.filter(({ date }) => {
         const today = new Date()
@@ -22,6 +24,6 @@ export const RecentExpenses = () => {
     }
 
     return (
-        <ExpensesOutput expenses={recentExpenses} expensesPeriod={`Last ${EXPENSES_DAYS} days`} fallbackText={'No expenses'} />
+        <ExpensesOutput expenses={recentExpenses} expensesPeriod={t('LAST_N_DAYS', { count: EXPENSES_DAYS})} fallbackText={t('NO_EXPENSES')} />
     )
 }
