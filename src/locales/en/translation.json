@@ -18,5 +18,8 @@
     "UNABLE_TO_DELETE_EXPENSE": "Unable to delete the Expense",
     "UNABLE_TO_SUBMIT_EXPENSE": "Unable to submit Expense",
     "YOUR_EXPENSE": "Your Expense",
-    "INVALID_INPUT_DATES_CHECK_ENTERED_DATA": "Invalid Input Values, please check entered data"
+    "INVALID_INPUT_DATES_CHECK_ENTERED_DATA": "Invalid Input Values, please check entered data",
+    "NO_EXPENSES": "No expenses",
+    "LAST_N_DAYS_one": "Since yesterday",
+    "LAST_N_DAYS_other": "Last {{count}} days"
 }
