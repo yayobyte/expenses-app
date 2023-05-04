@@ -1,7 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const en = require("./en.json");
-const ar = require("./ar.json");
 
 const app = express();
 app.use(bodyParser.json()).use(function (req, res, next) {
@@ -33,11 +31,6 @@ app.get("/", async (req, res) => {
   res.send("it works");
 });
 
-app.get("/strings", async (req, res) => {
-  console.warn("new request");
-  const strings = { en, ar };
-  res.send(strings);
-});
 app.use("/locales", express.static("locales"));
 
 app.listen(port, () => {
