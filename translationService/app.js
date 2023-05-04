@@ -13,6 +13,8 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/strings', async (req, res) => {
+    console.warn('new request')
+    console.log({ req }) ;
     const strings = { en, ar }
     res.send(strings)
 })
