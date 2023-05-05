@@ -10,7 +10,16 @@
   "DESCRIPTION": "الوصف",
   "CANCEL": "إلغاء",
   "ADD": "إضافة",
-  "AMOUNT": "المبلغ",
+  "AMOUNT": "",
   "EDIT_EXPENSES": "تعديل التفاصيل",
-  "UPDATE": "تحديث"
+  "UPDATE": "تحديث",
+  "UPDATE_EXPENSES": "تحديث المصروفات",
+  "AN_ERROR_OCCURRED": "",
+  "UNABLE_TO_DELETE_EXPENSE": "",
+  "UNABLE_TO_SUBMIT_EXPENSE": "",
+  "YOUR_EXPENSE": "",
+  "INVALID_INPUT_DATES_CHECK_ENTERED_DATA": "",
+  "NO_EXPENSES": "",
+  "LAST_N_DAYS_one": "",
+  "LAST_N_DAYS_other": ""
 }
