@@ -31,6 +31,11 @@ app.get("/", async (req, res) => {
   res.send("it works");
 });
 
+app.get('/strings', async (req, res) => {
+    const strings = { en, ar }
+    res.send(strings)
+})
+
 app.use("/locales", express.static("locales"));
 
 app.listen(port, () => {
